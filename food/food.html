@@ -1,0 +1,24 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="food.css">
+  </head>
+
+  <body >
+    
+      <div class="center">
+          <h1 >歡迎來到美食綠洲</h1>  
+          <h2>你所在的位置</h2>
+      </div>
+     
+
+    <!--HTML一定要有div map 這個元素-->
+      <div id="map"></div>
+
+    <!--初始化地圖-->
+    <script type="text/javascript" src="food_initmap.js"></script>
+
+    <!--串接googlemap api金鑰，這行在哪，地圖就出現在哪個頁面-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhIdpabFMtcGK6sKXhgKQhDa2AsM5GlVY&callback=initMap"></script>
+
+  </body>
+</html>
