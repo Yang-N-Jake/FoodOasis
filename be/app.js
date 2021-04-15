@@ -1,27 +1,41 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-// const mongoose = require('mongoose');
-
-// 首頁改成html的套件
-const cons = require('consolidate');
-
 // 提供第三方登入服務的套件。
 const passport = require('passport');
 
-// const facebookStrategy = require('passport-facebook').Strategy;
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const loginRouter = require('./routes/login');
+const express = require('express');
 
 const app = express();
+const createError = require('http-errors');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
+const session = require('express-session');
+
+const FacebookStrategy = require('passport-facebook').Strategy;
+
+const routes = require('./routes/login.js');
+
+// const config = require('./config');
+
+// const mongoose = require('mongoose');
+
+// const session = require('express-session');
+
+// 首頁改成html的套件
+// const cons = require('consolidate');
+
+// const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+// const loginRouter = require('./routes/login');
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+/*
 // view engine 設定成html
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+*/
 
 /*
 // view engine setup
@@ -35,39 +49,52 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// passport-middleware插件
-app.use(require('express-session')({
-  secret: 'keyboard cat',
-  resave: true,
+// // passport-middleware插件
+// app.use(require('express-session')({
+//   secret: 'keyboard cat',
+//   resave: true,
+//   saveUninitialized: true,
+// }));
+
+app.use(session({
+  secret: 'SECRET',
+  resave: false,
   saveUninitialized: true,
 }));
 
-// 初始化插件功能
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.serializeUser((user, cb) => cb(null, user));
+
+passport.deserializeUser((obj, cb) => cb(null, obj));
+
+passport.use(new FacebookStrategy({
+  clientID: '926686007872841',
+  clientSecret: 'c30b1fdd4a64a9b8dec03371a41d0eda',
+  callbackURL: 'https://localhost:3000/auth/facebook/callback',
+  // profileFields: ['user', 'id'],
+}, (accessToken, refreshToken, profile, done) => {
+  console.log('有成功喔!');
+  return done(null, profile);
+}));
+
+// app.use(session({
+//   secret: 'thisissecretkey',
+//   resave: false,
+//   saveUninitialized: false,
+// }));
 
 // mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true }, { useUnifiedTopology: true });
 // mongoose.set('useCreateIndex', true);
 
-/* const userSchema = new mongoose.Schema({
-  email: String,
-  Password: String,
-  facebookId: String,
-}); */
+// const userSchema = new mongoose.Schema({
+//   email: String,
+//   password: String,
+//   facebookId: String,
+// });
 
-// const User = new mongoose.Model('User', userSchema);
-
-// passport-facebook套件
-app.get('/auth/facebook',
-  passport.authenticate('facebook'));
-
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  (req, res) => {
-    // 認證成功重新導向
-    console.log('成功登入');
-    res.redirect('/callback');
-  });
+// const User = new mongoose.model('User', userSchema);
 
 /*
 app.use('/login/fb',
@@ -97,13 +124,44 @@ app.use('/logout', (req, res) => {
     failureRedirect: '/',
   })); */
 
-app.get('/', (req, res) => {
-  res.render('index');
-});
+// // passport-facebook套件
+// app.get('/auth/facebook',
+//   passport.authenticate('facebook'));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/login', loginRouter);
+// app.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', { failureRedirect: '/login' }),
+//   (req, res) => {
+//     // Successful authentication, redirect home.
+//     res.redirect('/');
+//   });
+
+/*
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  (req, res) => {
+    // 認證成功重新導向
+    console.log('成功登入');
+    res.redirect('/success');
+  });
+*/
+
+// app.get('/success', (req, res) => {
+//   res.send('使用FB登入成功');
+//   console.log('成功');
+// });
+
+// app.get('/login', (req, res) => {
+//   res.send('登入失敗，請重新登入');
+//   console.log('失敗');
+// });
+
+// app.get('/', (req, res) => {
+//   res.render('index');
+// });
+
+app.use('/', routes);
+// app.use('/users', usersRouter);
+// app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

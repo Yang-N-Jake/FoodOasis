@@ -1,16 +1,29 @@
 const express = require('express');
 
+// const passport = require('../config/passport');
+const passport = require('passport');
+
 const router = express.Router();
 
-const passport = require('../config/passport');
-
+// router.get('/', (req, res) => {
+//   res.render('index', { title: '美食綠洲' });
+// });
 router.get('/', (req, res) => {
-  res.render('index', { title: '美食綠洲' });
+  res.render('index');
 });
 
-router.get('/success', (req, res) => {
-  console.log(req.user);
-  res.render('success', { data: req.user });
+// eslint-disable-next-line consistent-return
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect('/');
+}
+
+router.get('/success', isLoggedIn, (req, res) => {
+  res.render('views/success.ejs', { user: req.user });
+});
+
+router.get('/error', isLoggedIn, (req, res) => {
+  res.render('views/error.ejs');
 });
 
 router.get('/auth/facebook',
@@ -19,7 +32,12 @@ router.get('/auth/facebook',
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
     successRedirect: '/success',
-    failureRedirect: '/',
+    failureRedirect: '/error',
   }));
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.render('/');
+});
 
 module.exports = router;
