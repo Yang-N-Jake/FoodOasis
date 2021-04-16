@@ -1,6 +1,5 @@
 const express = require('express');
 
-
 // const passport = require('../config/passport');
 const passport = require('passport');
 
@@ -20,12 +19,11 @@ function isLoggedIn(req, res, next) {
 }
 
 router.get('/success', isLoggedIn, (req, res) => {
-  res.render('views/success.ejs', { user: req.user });
+  res.render('success', { user: req.user });
 });
 
 router.get('/error', isLoggedIn, (req, res) => {
-  res.render('views/error.ejs');
-
+  res.render('error');
 });
 
 router.get('/auth/facebook',
@@ -39,8 +37,7 @@ router.get('/auth/facebook/callback',
 
 router.get('/logout', (req, res) => {
   req.logout();
-  res.render('/');
+  res.redirect('/');
 });
-
 
 module.exports = router;

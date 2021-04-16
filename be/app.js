@@ -1,6 +1,3 @@
-// 提供第三方登入服務的套件。
-const passport = require('passport');
-
 const express = require('express');
 
 const app = express();
@@ -11,7 +8,8 @@ const logger = require('morgan');
 // const mongoose = require('mongoose');
 
 const session = require('express-session');
-
+// 提供第三方登入服務的套件。
+const passport = require('passport');
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -22,7 +20,6 @@ const routes = require('./routes/login.js');
 // const mongoose = require('mongoose');
 
 // const session = require('express-session');
-
 
 // 首頁改成html的套件
 // const cons = require('consolidate');
@@ -39,9 +36,7 @@ app.set('view engine', 'ejs');
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-<<<<<<< HEAD
 */
-
 
 /*
 // view engine setup
@@ -54,7 +49,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // // passport-middleware插件
 // app.use(require('express-session')({
@@ -82,8 +76,7 @@ passport.use(new FacebookStrategy({
   callbackURL: 'https://localhost:3000/auth/facebook/callback',
   // profileFields: ['user', 'id'],
 }, (accessToken, refreshToken, profile, done) => {
-  console.log('有成功喔!');
-  return done(null, profile);
+  done(null, profile);
 }));
 
 // app.use(session({
@@ -102,7 +95,6 @@ passport.use(new FacebookStrategy({
 // });
 
 // const User = new mongoose.model('User', userSchema);
-
 
 /*
 app.use('/login/fb',
@@ -131,7 +123,6 @@ app.use('/logout', (req, res) => {
     successRedirect: '/profile',
     failureRedirect: '/',
   })); */
-
 
 // // passport-facebook套件
 // app.get('/auth/facebook',
@@ -171,7 +162,6 @@ app.get('/auth/facebook/callback',
 app.use('/', routes);
 // app.use('/users', usersRouter);
 // app.use('/login', loginRouter);
-
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
