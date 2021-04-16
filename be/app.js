@@ -8,8 +8,10 @@ const createError = require('http-errors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// const mongoose = require('mongoose');
 
 const session = require('express-session');
+
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -21,6 +23,7 @@ const routes = require('./routes/login.js');
 
 // const session = require('express-session');
 
+
 // 首頁改成html的套件
 // const cons = require('consolidate');
 
@@ -31,11 +34,14 @@ const routes = require('./routes/login.js');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 /*
+
 // view engine 設定成html
 app.engine('html', cons.swig);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+<<<<<<< HEAD
 */
+
 
 /*
 // view engine setup
@@ -48,6 +54,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // // passport-middleware插件
 // app.use(require('express-session')({
@@ -96,6 +103,7 @@ passport.use(new FacebookStrategy({
 
 // const User = new mongoose.model('User', userSchema);
 
+
 /*
 app.use('/login/fb',
   passport.authenticate('facebook'));
@@ -123,6 +131,7 @@ app.use('/logout', (req, res) => {
     successRedirect: '/profile',
     failureRedirect: '/',
   })); */
+
 
 // // passport-facebook套件
 // app.get('/auth/facebook',
@@ -162,6 +171,7 @@ app.get('/auth/facebook/callback',
 app.use('/', routes);
 // app.use('/users', usersRouter);
 // app.use('/login', loginRouter);
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://abc86:12345@locallibrary.wbibc.mongodb.net/test', {
+
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

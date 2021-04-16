@@ -1,5 +1,6 @@
 const express = require('express');
 
+
 // const passport = require('../config/passport');
 const passport = require('passport');
 
@@ -24,6 +25,7 @@ router.get('/success', isLoggedIn, (req, res) => {
 
 router.get('/error', isLoggedIn, (req, res) => {
   res.render('views/error.ejs');
+
 });
 
 router.get('/auth/facebook',
@@ -39,5 +41,6 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.render('/');
 });
+
 
 module.exports = router;
