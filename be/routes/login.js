@@ -19,7 +19,7 @@ function isLoggedIn(req, res, next) {
 }
 
 router.get('/success', isLoggedIn, (req, res) => {
-  res.render('success', { user: req.user });
+  res.render('success', { user: 'req.user' });
 });
 
 router.get('/error', isLoggedIn, (req, res) => {
@@ -27,7 +27,7 @@ router.get('/error', isLoggedIn, (req, res) => {
 });
 
 router.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', { scope: 'email' }));
 
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {

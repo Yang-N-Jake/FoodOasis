@@ -1,9 +1,9 @@
 const express = require('express');
 
 const app = express();
-const createError = require('http-errors');
+// const createError = require('http-errors');
 const path = require('path');
-const cookieParser = require('cookie-parser');
+//  const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 // const mongoose = require('mongoose');
 
@@ -12,9 +12,9 @@ const session = require('express-session');
 const passport = require('passport');
 
 const FacebookStrategy = require('passport-facebook').Strategy;
-
-const routes = require('./routes/login.js');
-
+const keys = require('./keys');
+const routes = require('./routes/login');
+const User = require('./models/user');
 // const config = require('./config');
 
 // const mongoose = require('mongoose');
@@ -47,7 +47,7 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // // passport-middleware插件
@@ -58,7 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // }));
 
 app.use(session({
-  secret: 'SECRET',
+  secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
 }));
@@ -66,17 +66,59 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, cb) => cb(null, user));
+passport.serializeUser((user, done) => done(null, user.id));
 
-passport.deserializeUser((obj, cb) => cb(null, obj));
+//  passport.deserializeUser((obj, cb) => cb(null, obj));
+passport.deserializeUser((id, done) => {
+  User.findOne({ uid: id }, (err, user) => {
+    done(err, user);
+  });
+  return done(null, id);
+});
 
 passport.use(new FacebookStrategy({
-  clientID: '926686007872841',
-  clientSecret: 'c30b1fdd4a64a9b8dec03371a41d0eda',
-  callbackURL: 'https://localhost:3000/auth/facebook/callback',
-  // profileFields: ['user', 'id'],
+  clientID: keys.FB_AUTH_ID,
+  clientSecret: keys.FB_AUTH_TOKEN,
+  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  profileFields: ['name', 'email', 'picture.type(large)'],
 }, (accessToken, refreshToken, profile, done) => {
-  done(null, profile);
+  // asynchronous
+  process.nextTick(() => {
+    // find the user in the database based on their facebook id
+    User.findOne({ uid: profile.id }, (err, user) => {
+      // if there is an error, stop everything and return that
+      // ie an error connecting to the database
+      if (err) {
+        return done(err);
+      }
+      // if the user is found, then log them in
+      if (user) {
+        console.log('user found');
+        console.log(user);
+        return done(null, user); // user found, return that user
+      }
+      // if there is no user found with that facebook id, create them
+      const newUser = new User();
+
+      // set all of the facebook information in our user model
+      newUser.uid = profile.id; // set the users facebook id
+      newUser.token = accessToken; // we will save the token that facebook provides to the user
+      newUser.name = `${profile.name.givenName} ${profile.name.familyName}`;
+      newUser.email = profile.emails[0].value;
+      newUser.gender = profile.gender;
+      newUser.pic = profile.photos[0].value;
+      // save our user to the database
+      newUser.save((err2) => {
+        if (err2) {
+          throw err2;
+        }
+        // if successful, return the new user
+        return done(null, newUser);
+      });
+    });
+  });
+  // console.log(profile);
+  // return done(null, profile);
 }));
 
 // app.use(session({
@@ -164,19 +206,19 @@ app.use('/', routes);
 // app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
-});
+// app.use((req, res, next) => {
+//   next(createError(404));
+// });
 
 // error handler
-app.use((err, req, res) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use((err, req, res) => {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;
