@@ -10,6 +10,7 @@
     "consolidate": "^0.16.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "ejs": "^3.1.6",
     "express": "~4.16.1",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
@@ -19,6 +20,9 @@
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "pug": "2.0.0-beta11",
+
+    "request-promise": "^4.2.6",
+
     "swig": "^1.4.2"
   },
   "devDependencies": {
