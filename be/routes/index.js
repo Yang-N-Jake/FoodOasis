@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: '美食綠洲' });
+  res.render('index');
 });
 
 module.exports = router;
