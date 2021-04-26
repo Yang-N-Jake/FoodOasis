@@ -36,7 +36,7 @@
 				<!-- Main -->
 					<article id="main">
 						<header>
-							<h2>HI, '<%= user.name %>'</h2>
+							<h2>HI, <%= user.name %></h2>
 							<p>請下滑點選所需要的功能</p>
              					<ul class="actions special">
 								<li><a href="/logout" class="button primary">點此登出</a></li>
@@ -44,12 +44,12 @@
 						</header>
 						<section class="wrapper style5">
 							<div class="inner">
-
+								<!--user'data from DB-->
 								<strong>id</strong>: <%= user.uid %><br>
 								<strong>token</strong>: <%= user.token %><br>
 								<strong>email</strong>: <%= user.email %><br>
-								<strong>name</strong>: '<%= user.name %>'<br>
-								<strong>gender</strong>: <%= user.gender %><br>
+								<strong>name</strong>: <%= user.name %><br>
+								<!--<strong>gender</strong>: <%= user.gender %><br>-->
                				    <img src="<%=user.pic%>" width="200" height="200" alt=""></p>
 
 								<hr />
