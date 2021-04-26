@@ -18,6 +18,11 @@ router.get('/home', isLoggedIn, (req, res) => {
   res.render('home', { user: req.user });
 });
 
+// add get restaurant
+router.get('/addrestaurant', isLoggedIn, (req, res) => {
+  res.render('addrestaurant', { user: req.user });
+});
+
 router.get('/error', isLoggedIn, (req, res) => {
   res.render('error');
 });

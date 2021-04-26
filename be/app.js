@@ -71,7 +71,6 @@ passport.use(new FacebookStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   process.nextTick(() => {
     // eslint-disable-next-line consistent-return
-    console.log(profile);
     User.findOne({ uid: profile.id }, (err, user) => {
       if (err) {
         return done(err);
@@ -83,6 +82,7 @@ passport.use(new FacebookStrategy({
       // set fb information
       newUser.uid = profile.id;
       newUser.token = accessToken;
+      // display your fb displayname
       newUser.name = profile.displayName;
       newUser.email = profile.emails[0].value;
       newUser.pic = profile.photos[0].value;
