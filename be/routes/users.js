@@ -7,9 +7,4 @@ router.get('/', (req, res) => {
   res.send('respond with a resource');
 });
 
-/*  mongoose.connect("mongodb://",{
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});  */
-
 module.exports = router;

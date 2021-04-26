@@ -1,13 +1,9 @@
 const express = require('express');
 
-// const passport = require('../config/passport');
 const passport = require('passport');
 
 const router = express.Router();
 
-// router.get('/', (req, res) => {
-//   res.render('index', { title: '美食綠洲' });
-// });
 router.get('/', (req, res) => {
   res.render('index');
 });
@@ -27,7 +23,7 @@ router.get('/error', isLoggedIn, (req, res) => {
 });
 
 router.get('/auth/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook', { scope: 'email' }));
 
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
