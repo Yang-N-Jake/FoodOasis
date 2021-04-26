@@ -1,15 +1,25 @@
 <!DOCTYPE HTML>
-<!--
-	HTML模板
--->
 <html>
 	<head>
 		<title>創建餐廳</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+   	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/stylesheets/main.css" />
+		<link rel="canonical" href="https://letswrite.tw/google-map-api-place-api/">
 		<noscript><link rel="stylesheet" href="/stylesheets/noscript.css" /></noscript>
+		
+		<script>
+			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-PGQ9WQT');
+		</script>
 	</head>
+
 	<body class="is-preload">
 
 		<!-- Page Wrapper -->
@@ -40,47 +50,130 @@
 					<article id="main">
 						<header>
 							<h2>創建餐廳</h2>
-							<p>於下框填寫想新增的餐廳</p>
+							<p>往下滑填寫想新增的餐廳</p>
 							<a href="/home" class="button">返回上一頁</a></li><p></p>
-							<div id="app">
-
-								<!-- 搜尋框 -->
-								<div>
-								  <input type="text" ref="site" v-model="site">
-								</div>
-							  
-								<!-- 放google map的div -->
-								<div>
-								  <div id="map"></div>
-								</div>
-							  
-								<!-- 放評論摘要的div -->
-								<script>
-									let map;
-
-									function initMap() {
-									map = new google.maps.Map(document.getElementById("map"), {
-										center: { lat: -34.397, lng: 150.644 },
-										zoom: 8,
-									});
-									}
-								</script>
-							  </div>
 						</header>
 						<section class="wrapper style5">
 							<div class="inner">
-
-								<h3>Lorem ipsum dolor</h3>
-								<p>Morbi mattis mi consectetur tortor elementum, varius pellentesque velit convallis. Aenean tincidunt lectus auctor mauris maximus, ac scelerisque ipsum tempor. Duis vulputate ex et ex tincidunt, quis lacinia velit aliquet. Duis non efficitur nisi, id malesuada justo. Maecenas sagittis felis ac sagittis semper. Curabitur purus leo, tempus sed finibus eget, fringilla quis risus. Maecenas et lorem quis sem varius sagittis et a est. Maecenas iaculis iaculis sem. Donec vel dolor at arcu tincidunt bibendum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Fusce ut aliquet justo. Donec id neque ipsum. Integer eget ultricies odio. Nam vel ex a orci fringilla tincidunt. Aliquam eleifend ligula non velit accumsan cursus. Etiam ut gravida sapien.</p>
-
-								<p>Vestibulum ultrices risus velit, sit amet blandit massa auctor sit amet. Sed eu lectus sem. Phasellus in odio at ipsum porttitor mollis id vel diam. Praesent sit amet posuere risus, eu faucibus lectus. Vivamus ex ligula, tempus pulvinar ipsum in, auctor porta quam. Proin nec dui cursus, posuere dui eget interdum. Fusce lectus magna, sagittis at facilisis vitae, pellentesque at etiam. Quisque posuere leo quis sem commodo, vel scelerisque nisi scelerisque. Suspendisse id quam vel tortor tincidunt suscipit. Nullam auctor orci eu dolor consectetur, interdum ullamcorper ante tincidunt. Mauris felis nec felis elementum varius.</p>
-
-								<hr />
-
-								<h4>Feugiat aliquam</h4>
-								<p>Nam sapien ante, varius in pulvinar vitae, rhoncus id massa. Donec varius ex in mauris ornare, eget euismod urna egestas. Etiam lacinia tempor ipsum, sodales porttitor justo. Aliquam dolor quam, semper in tortor eu, volutpat efficitur quam. Fusce nec fermentum nisl. Aenean erat diam, tempus aliquet erat.</p>
-
-								<p>Etiam iaculis nulla ipsum, et pharetra libero rhoncus ut. Phasellus rutrum cursus velit, eget condimentum nunc blandit vel. In at pulvinar lectus. Morbi diam ante, vulputate et imperdiet eget, fermentum non dolor. Ut eleifend sagittis tincidunt. Sed viverra commodo mi, ac rhoncus justo. Duis neque ligula, elementum ut enim vel, posuere finibus justo. Vivamus facilisis maximus nibh quis pulvinar. Quisque hendrerit in ipsum id tellus facilisis fermentum. Proin mauris dui, at vestibulum sit amet, auctor bibendum neque.</p>
+								<!-- Google Tag Manager (noscript)-->
+    							<noscript>
+								<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+	  							</noscript>
+  
+	  					<div id="app" class="container">
+							<!-- 搜尋框 -->
+							<div class="row">
+							<div class="col google-map">
+								<h5>搜尋地點：</h5>
+								<div class="form-group">
+								<input type="text" class="form-control" ref="site" v-model="site">
+								</div>
+							</div>
+							</div>
+  
+							<!-- 放google map的div -->
+							<div class="row">
+							<div class="col google-map">
+								<h5>地圖：</h5>
+								<div id="map" class="embed-responsive embed-responsive-16by9"></div>
+							</div>
+							</div>
+				
+		
+							<hr>
+  
+							<!-- 放評論摘要的div -->
+							<div class="row" v-if="place != null">
+							<div class="col" v-if="place.reviews != null">
+								<h5>評論：</h5>
+								<div class="row" v-for="p in place.reviews">
+								<div class="col">
+									<ul class="list-unstyled">
+									<li class="media">
+										<img :src="p.profile_photo_url" class="mr-3">
+										<div class="media-body">
+										<h5 class="mt-0 mb-1">
+											<a target="_blank" :href="p.author_url">{{ p.author_name }}</a>
+										</h5>
+										<p>{{ p.text }}</p>
+										<h6>{{ p.relative_time_description }}</h6>
+										</div>
+									</li>
+									</ul>
+								</div>
+								</div>
+							</div>
+							</div>
+					
+						</div>
+							
+							<!-- 將 YOUR_API_KEY 替換成你的 API Key 即可 -->
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+  
+							<!-- map -->
+							<script>
+								const googleMap = new Vue({
+								el: '#app',
+								data: {
+									map: null,
+									autocomplete: null,
+									site: '', // place API要綁定的搜尋框
+									place: null // 存place確定後回傳的資料
+								},
+								methods: {
+									// init google map
+									initMap() {
+						
+									let location = {
+										lat: 25.0374865,
+										lng: 121.5647688
+									};
+						
+									this.map = new google.maps.Map(document.getElementById('map'), {
+										center: location,
+										zoom: 16
+									});
+									},
+									// 地址自動完成 + 地圖的中心移到輸入結果的地址上
+									siteAuto() {
+						
+									let options = {
+										componentRestrictions: { country: 'tw' } // 限制在台灣範圍
+									};
+									this.autocomplete = new google.maps.places.Autocomplete(this.$refs.site, options);
+									this.autocomplete.addListener('place_changed', () => {
+										this.place = this.autocomplete.getPlace();
+										if(this.place.geometry) {
+										let searchCenter = this.place.geometry.location;
+										this.map.panTo(searchCenter); // panTo是平滑移動、setCenter是直接改變地圖中心
+										
+										// 放置標記
+										let marker = new google.maps.Marker({
+											position: searchCenter,
+											map: this.map
+										});
+						
+										// info window
+										let infowindow = new google.maps.InfoWindow({
+											content: this.place.formatted_address
+										});
+										infowindow.open(this.map, marker);
+						
+										}
+									});
+									}
+								},
+								mounted() {
+									window.addEventListener('load', () => {
+						
+									this.initMap();
+									this.siteAuto();
+						
+									});
+								}
+								})
+							</script>
 
 							</div>
 						</section>
@@ -99,9 +192,7 @@
 							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 						</ul>
 					</footer>
-
 			</div>
-
 		<!-- Scripts -->
 			<script src="/javascripts/jquery.min.js"></script>
 			<script src="/javascripts/jquery.scrollex.min.js"></script>
