@@ -22,6 +22,7 @@ router.get('/error', isLoggedIn, (req, res) => {
   res.render('error');
 });
 
+// get FB auth
 router.get('/auth/facebook',
   passport.authenticate('facebook', { scope: 'email' }));
 
@@ -31,6 +32,17 @@ router.get('/auth/facebook/callback',
     failureRedirect: '/error',
   }));
 
+// get GOOGLE auth
+router.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/success',
+    failureRedirect: '/error',
+  }));
+
+// get logout
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');

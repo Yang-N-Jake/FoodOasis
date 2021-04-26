@@ -12,6 +12,9 @@ const session = require('express-session');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
+// Google login package
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 // get keys
 const keys = require('./keys');
 
@@ -94,6 +97,41 @@ passport.use(new FacebookStrategy({
   });
 }));
 
+// use GOOGLE Strategy
+passport.use(new GoogleStrategy({
+  clientID: keys.GOOGLE_AUTH_ID,
+  clientSecret: keys.GOOGLE_AUTH_TOKEN,
+  callbackURL: 'http://localhost:3000/auth/google/callback',
+  profileFields: ['id', 'displayName', 'name', 'picture.type(large)', 'email'],
+}, (accessToken, refreshToken, profile, done) => {
+  process.nextTick(() => {
+    console.log(profile);
+    // eslint-disable-next-line consistent-return
+    User.findOne({ uid: profile.id }, (err, user) => {
+      if (err) {
+        return done(err);
+      }
+      if (user) {
+        return done(null, user);
+      }
+      const newUser = new User();
+      // set fb information
+      newUser.uid = profile.id;
+      newUser.token = accessToken;
+      newUser.name = `${profile.name.givenName} ${profile.name.familyName}`;
+      newUser.email = profile.emails[0].value;
+      newUser.pic = profile.photos[0].value;
+      // save user to the database
+      newUser.save((err2) => {
+        if (err2) {
+          throw err2;
+        }
+        // success, return the new user
+        return done(null, newUser);
+      });
+    });
+  });
+}));
 app.use('/', routes);
 
 module.exports = app;
