@@ -5,7 +5,7 @@ const passport = require('passport');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('index');
+  res.render('login');
 });
 
 // eslint-disable-next-line consistent-return
@@ -14,8 +14,8 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
-router.get('/success', isLoggedIn, (req, res) => {
-  res.render('success', { user: req.user });
+router.get('/home', isLoggedIn, (req, res) => {
+  res.render('home', { user: req.user });
 });
 
 router.get('/error', isLoggedIn, (req, res) => {
@@ -28,7 +28,7 @@ router.get('/auth/facebook',
 
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: '/success',
+    successRedirect: '/home',
     failureRedirect: '/error',
   }));
 
@@ -38,7 +38,7 @@ router.get('/auth/google',
 
 router.get('/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/success',
+    successRedirect: '/home',
     failureRedirect: '/error',
   }));
 
