@@ -19,7 +19,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./keys');
 
 // routes and user
-const routes = require('./routes/login');
+const loginRouter = require('./routes/login');
+// const addrestRouter = require('./routes/addrest');
+
 const User = require('./models/user');
 
 // homepage.ejs
@@ -132,6 +134,7 @@ passport.use(new GoogleStrategy({
     });
   });
 }));
-app.use('/', routes);
+app.use('/', loginRouter);
+// app.use('/addrest', addrestRouter);
 
 module.exports = app;
