@@ -59,30 +59,11 @@
     							<noscript>
 								<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
 	  							</noscript>
-  
+
 	  					<div id="app" class="container">
-								
-							<!-- 搜尋框 -->
-							<div class="row">
-							<div class="col google-map">
-								<h4>搜尋地點：</h4>
-								<div class="form-group">
-								<input type="text" class="form-control" ref="site" v-model="site">
-								</div>
-							</div>
-							</div>
-  
-							<!-- 放google map的div -->
-							<div class="row">
-							<div class="col google-map">
-								<h4>地圖：</h4>
-								<div id="map" class="embed-responsive embed-responsive-16by9"></div>
-							</div>
-							</div>
-				
-		
-							<hr>
-							<input id="autocomplete" placeholder="來，輸入地點" type="text"/>
+							<h4>搜尋地點：</h4>
+							<input id="autocomplete" placeholder="這邊輸入地點！" type="text"/>
+
 							<script>
 								let autocomplete;
 								function initAutocomplete(){
@@ -95,14 +76,56 @@
 										});
 										autocomplete.addListener('place_changed', onPlaceChanged);
 								}
+
+								function onPlaceChanged(){
+									var place = autocomplete.getPlace();
+									if(!place.geometry){
+										document.getElementById('autocomplete').placeholder =
+										'請填寫地點哦！';
+									}else{
+										document.getElementById('details').innerHTML = place.name;
+									}
+								}
+
 							</script>
+							<hr>
+							<!-- Google Tag Manager (noscript)-->
+							<noscript>
+								<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+	  					</noscript>
+
+							<!-- 放google map的div -->
+							<div class="row">
+							<div class="col google-map">
+								<h4>地圖：</h4>
+								<div id="map" class="embed-responsive embed-responsive-16by9"></div>
+								
+								</style>
+							</div>
+
+							</div>
+							<script>
+								function initMap() {
+									var uluru = {lat: 23.5, lng:121};
+									var map = new google.maps.Map(document.getElementById('map'), {
+										zoom: 8,
+										center: uluru
+									});
+									var marker = new google.maps.Marker({
+										position: uluru,
+										map: map
+									});
+								}
+							</script>
+		
+							
+							
 							
 							
 							<!-- GOOGLE API KEY -->
 							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places&callback=initAutocomplete" async defer></script>
+							<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places&callback=initMap" async defer></script>
 							<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
-  
-							
 
 							</div>
 						</section>
@@ -117,6 +140,7 @@
 							<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
 							<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
 						</ul>
+
 						<ul class="copyright">
 							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 						</ul>
@@ -130,6 +154,5 @@
 			<script src="/javascripts/breakpoints.min.js"></script>
 			<script src="/javascripts/util.js"></script>
 			<script src="/javascripts/main.js"></script>
-
 	</body>
 </html>
