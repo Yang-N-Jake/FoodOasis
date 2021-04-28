@@ -60,7 +60,7 @@
 
 								<!-- Add restaurant to db's button-->
 								<br>
-								<a href="#" class="button">點我，把餐廳加到最愛</a></li><p></p>
+								<a id="loverest" href="#" class="button">點我，把餐廳加到最愛</a></li><p></p>
 							<hr>
 
 								<!-- Google map DIV -->
@@ -119,7 +119,11 @@
 												// address from fields
 											content: place.formatted_address,
 											});
-		
+
+											document.getElementById("loverest").addEventListener("click", function() {
+												
+											});
+
 											infowindow.open(map, marker);
 											marker.addListener('click', function() {
 												infowindow.open(map, marker );

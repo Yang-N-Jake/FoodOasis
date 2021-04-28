@@ -6,8 +6,10 @@ const keys = require('../keys');
 mongoose.connect(`mongodb+srv://${keys.MONGODB_USER}:${keys.MONGODB_PWD}@cluster0.bdvkl.mongodb.net/foodoasis?retryWrites=true&w=majority`);
 
 const restaurant = mongoose.Schema({
-  uid: String,
+  place_id: String,
   name: String,
+  geometry: String,
+  formatted_address: String,
 });
 
 module.exports = mongoose.model('restaurant', restaurant);
