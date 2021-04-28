@@ -3320,10 +3320,10 @@ input, select, textarea {
 /* Page Wrapper + Menu */
 
 	#page-wrapper {
-		-moz-transition: opacity 0.5s ease;
-		-webkit-transition: opacity 0.5s ease;
-		-ms-transition: opacity 0.5s ease;
-		transition: opacity 0.5s ease;
+		-moz-transition: opacity 0.1s ease;
+		-webkit-transition: opacity 0.1s ease;
+		-ms-transition: opacity 0.1s ease;
+		transition: opacity 0.1s ease;
 		opacity: 1;
 		padding-top: 3em;
 	}
@@ -3346,10 +3346,10 @@ input, select, textarea {
 		-webkit-transform: translateX(20em);
 		-ms-transform: translateX(20em);
 		transform: translateX(20em);
-		-moz-transition: -moz-transform 0.5s ease;
-		-webkit-transition: -webkit-transform 0.5s ease;
-		-ms-transition: -ms-transform 0.5s ease;
-		transition: transform 0.5s ease;
+		-moz-transition: -moz-transform 0.1s ease;
+		-webkit-transition: -webkit-transform 0.1s ease;
+		-ms-transition: -ms-transform 0.1s ease;
+		transition: transform 0.1s ease;
 		-webkit-overflow-scrolling: touch;
 		background: #21b2a6;
 		color: #ffffff;
@@ -3589,10 +3589,10 @@ input, select, textarea {
 			-webkit-transform: scale(1);
 			-ms-transform: scale(1);
 			transform: scale(1);
-			-moz-transition: -moz-transform 0.5s ease, opacity 0.5s ease;
-			-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
-			-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
-			transition: transform 0.5s ease, opacity 0.5s ease;
+			-moz-transition: -moz-transform 0.1s ease, opacity 0.1s ease;
+			-webkit-transition: -webkit-transform 0.1s ease, opacity 0.1s ease;
+			-ms-transition: -ms-transform 0.1s ease, opacity 0.1s ease;
+			transition: transform 0.1s ease, opacity 0.1s ease;
 			display: inline-block;
 			font-size: 1.75em;
 			opacity: 1;
@@ -3642,10 +3642,10 @@ input, select, textarea {
 			-webkit-transition: -webkit-transform 0.75s ease, opacity 0.75s ease;
 			-ms-transition: -ms-transform 0.75s ease, opacity 0.75s ease;
 			transition: transform 0.75s ease, opacity 0.75s ease;
-			-moz-transition-delay: 3.5s;
-			-webkit-transition-delay: 3.5s;
-			-ms-transition-delay: 3.5s;
-			transition-delay: 3.5s;
+			-moz-transition-delay: 0.5s; /* 2.0s to 0.5s */
+			-webkit-transition-delay: 0.5s;
+			-ms-transition-delay: 0.5s;
+			transition-delay: 0.5s;
 			-moz-transform: translateY(0);
 			-webkit-transform: translateY(0);
 			-ms-transform: translateY(0);
@@ -3685,10 +3685,10 @@ input, select, textarea {
 
 		#banner:after {
 			pointer-events: none;
-			-moz-transition: opacity 3s ease-in-out;
-			-webkit-transition: opacity 3s ease-in-out;
-			-ms-transition: opacity 3s ease-in-out;
-			transition: opacity 3s ease-in-out;
+			-moz-transition: opacity 0.5s ease-in-out; /* 3s to 0.5s */
+			-webkit-transition: opacity 0.5s ease-in-out;
+			-ms-transition: opacity 0.5s ease-in-out;
+			transition: opacity 0.5s ease-in-out;
 			-moz-transition-delay: 1.25s;
 			-webkit-transition-delay: 1.25s;
 			-ms-transition-delay: 1.25s;
@@ -3844,7 +3844,7 @@ input, select, textarea {
 		@media screen and (max-width: 1680px) {
 
 			#main > header {
-				padding: 10em 0 8em 0 ;
+				padding: 2em 0 1em 0 ;
 			}
 
 		}
@@ -3860,7 +3860,7 @@ input, select, textarea {
 		@media screen and (max-width: 980px) {
 
 			#main > header {
-				padding: 10em 3em 8em 3em ;
+				padding: 2em 3em 1em 3em ;
 			}
 
 		}

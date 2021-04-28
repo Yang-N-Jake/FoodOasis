@@ -19,7 +19,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./keys');
 
 // routes and user
-const routes = require('./routes/login');
+const loginRouter = require('./routes/login');
+// const addrestRouter = require('./routes/addrest');
+
 const User = require('./models/user');
 
 // homepage.ejs
@@ -71,7 +73,6 @@ passport.use(new FacebookStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   process.nextTick(() => {
     // eslint-disable-next-line consistent-return
-    console.log(profile);
     User.findOne({ uid: profile.id }, (err, user) => {
       if (err) {
         return done(err);
@@ -83,6 +84,7 @@ passport.use(new FacebookStrategy({
       // set fb information
       newUser.uid = profile.id;
       newUser.token = accessToken;
+      // display your fb displayname
       newUser.name = profile.displayName;
       newUser.email = profile.emails[0].value;
       newUser.pic = profile.photos[0].value;
@@ -132,6 +134,7 @@ passport.use(new GoogleStrategy({
     });
   });
 }));
-app.use('/', routes);
+app.use('/', loginRouter);
+// app.use('/addrest', addrestRouter);
 
 module.exports = app;

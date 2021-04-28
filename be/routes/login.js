@@ -4,6 +4,8 @@ const passport = require('passport');
 
 const router = express.Router();
 
+// const addrestController = require('../controller/addrest_controller');
+
 router.get('/', (req, res) => {
   res.render('login');
 });
@@ -13,6 +15,11 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
   res.redirect('/');
 }
+
+router.get('/addrestaurant', isLoggedIn, (req, res) => {
+  res.render('addrestaurant', { user: req.user });
+  // addrestController.init_autocomplete();
+});
 
 router.get('/home', isLoggedIn, (req, res) => {
   res.render('home', { user: req.user });
