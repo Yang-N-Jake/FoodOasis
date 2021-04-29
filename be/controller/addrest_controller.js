@@ -1,17 +1,27 @@
-// const Restaurant = require('../models/restaurant');
+const toRegister = require('../routes/login');
 
-// const {google} = require('googleapis');
-
-// let autocomplete;
-
-// exports.init_autocomplete = () => {
-//   autocomplete = new google.maps.places.Autocomplete(
-//     document.getElementById('autocomplete'),
-//     {
-//       types:['establishment'],
-//       componentRestrictions:{'country':['TW']},
-//       fields:['place_id','geometry','name']
-//     });
-//     console.log('有跑道CONTROLLER');
-// }
-					
+module.exports = class Member {
+    postRegister(req, res, next) {
+        // 獲取client端資料
+        const memberData = {
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password,
+            create_date: onTime()
+        }
+        console.log(memberData);
+        // 將資料寫入資料庫
+        // toRegister(memberData).then(result => {
+        //     // 若寫入成功則回傳
+        //     res.json({
+        //         status: "註冊成功。",
+        //         result: result 
+        //     })
+        // }, (err) => {
+        //     // 若寫入失敗則回傳
+        //     res.json({
+        //         result: err
+        //     })
+        // })
+    }
+}
