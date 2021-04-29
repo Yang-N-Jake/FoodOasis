@@ -4,6 +4,8 @@ const passport = require('passport');
 
 const router = express.Router();
 
+const favrestcontroller = require('../controller/addrest_controller');
+
 router.get('/', (req, res) => {
   res.render('login');
 });
@@ -16,19 +18,14 @@ function isLoggedIn(req, res, next) {
 
 router.get('/addrestaurant', isLoggedIn, (req, res) => {
   res.render('addrestaurant', { user: req.user });
-  // addrestController.init_autocomplete();
 });
 
 router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
 });
 
-router.post('/favrest', (req, res) => {
-  console.log('跑到POST去了========================');
-  const account = req.body.enterplacename; //  body 透過 input name 抓 data
-  console.log(account);
-  res.redirect('/addrestaurant');
-});
+// favrest form post, call favrestcontroller
+router.post('/favrest', favrestcontroller.addfavrest);
 
 router.get('/home', isLoggedIn, (req, res) => {
   res.render('home', { user: req.user });

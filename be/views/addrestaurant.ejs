@@ -59,12 +59,9 @@
 								<form action="/favrest" method="POST">
 									<input id="autocomplete" name="enterplacename" placeholder="這邊輸入地點！" type="text"/>
 									<br>
-									<!-- Add favrest to db -->
+									<!-- Add favrest to database -->
 									<button type="submit">點我，把餐廳加到最愛吧~</button>
 								</form>
-								
-								
-								<!-- <a href="/favrest" method="post" class="button">點我，把餐廳加到最愛</a></li><p></p> -->
 							<hr>
 
 								<!-- Google map DIV -->
@@ -79,6 +76,7 @@
 								<!-- initMap & initAutocomplete -->
 								<script>
 									let map;
+									let place
 									function initMap() {
 										
 										let location = {
@@ -103,9 +101,9 @@
 											});
 											autocomplete.addListener('place_changed', onPlaceChanged);
 									}
-
+									
 									function onPlaceChanged(){
-										var place = autocomplete.getPlace();
+										place = autocomplete.getPlace();
 										if(!place.geometry){
 											document.getElementById('autocomplete').placeholder =
 											'請填寫地點哦！';
