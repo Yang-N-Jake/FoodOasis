@@ -21,6 +21,12 @@ router.get('/addrestaurant', isLoggedIn, (req, res) => {
   // addrestController.init_autocomplete();
 });
 
+router.get('/favrest', isLoggedIn, (req, res) => {
+  // console.log('=============================================================');
+  // console.log(req);
+  res.render('addrestaurant', { user: req.user });
+});
+
 router.get('/home', isLoggedIn, (req, res) => {
   res.render('home', { user: req.user });
 });

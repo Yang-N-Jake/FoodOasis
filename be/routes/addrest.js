@@ -8,9 +8,9 @@ const router = express.Router();
 //   res.redirect('/');
 // }
 // add get restaurant
-router.get('/addrestaurant', (res) => {
-  // res.render('addrestaurant', { user: req.user });
-  res.redirect('/');
-});
+// router.get('/addrestaurant', (res) => {
+//   // res.render('addrestaurant', { user: req.user });
+//   res.redirect('/');
+// });
 
 module.exports = router;
