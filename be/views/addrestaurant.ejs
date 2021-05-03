@@ -55,12 +55,13 @@
 								<!-- GOOGLE API KEY -->
 									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
 								
-								<!-- Search BOX -->
-								<input id="autocomplete" placeholder="這邊輸入地點！" type="text"/>
-
-								<!-- Add restaurant to db's button-->
-								<br>
-								<a href="/favrest" id="favrest" class="button">點我，把餐廳加到最愛</a></li><p></p>
+								<!-- Search Box -->
+								<form action="/favrest" method="POST">
+									<input id="autocomplete" name="enterplacename" placeholder="這邊輸入地點！" type="text"/>
+									<br>
+									<!-- Add favrest to database -->
+									<button type="submit">點我，把餐廳加到最愛吧~</button>
+								</form>
 							<hr>
 
 								<!-- Google map DIV -->
@@ -75,6 +76,7 @@
 								<!-- initMap & initAutocomplete -->
 								<script>
 									let map;
+									let place
 									function initMap() {
 										
 										let location = {
@@ -99,9 +101,9 @@
 											});
 											autocomplete.addListener('place_changed', onPlaceChanged);
 									}
-
+									
 									function onPlaceChanged(){
-										var place = autocomplete.getPlace();
+										place = autocomplete.getPlace();
 										if(!place.geometry){
 											document.getElementById('autocomplete').placeholder =
 											'請填寫地點哦！';
@@ -120,9 +122,9 @@
 											content: place.formatted_address,
 											});
 
-											document.getElementById("favrest").addEventListener("click", function() {
+											// document.getElementById("favrest").addEventListener("click", function() {
 												
-											});
+											// });
 
 											infowindow.open(map, marker);
 											marker.addListener('click', function() {
