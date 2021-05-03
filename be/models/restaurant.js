@@ -1,4 +1,4 @@
-// store restaurant data to Database
+// 餐廳資料
 const mongoose = require('mongoose');
 
 const keys = require('../keys');

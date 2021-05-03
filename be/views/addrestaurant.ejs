@@ -47,7 +47,6 @@
 
 						<section class="wrapper style5">
 
-							<!-- Google AND Search BOX -->
 							<div class="inner">	
 								<div id="app" class="container">
 								<h4>搜尋地點：</h4>
@@ -55,19 +54,19 @@
 								<!-- GOOGLE API KEY -->
 									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
 								
-								<!-- Search Box -->
+								<!-- 搜尋框 -->
 								<form action="/favrest" method="POST">
 									<input id="autocomplete" name="enterplacename" placeholder="這邊輸入地點！" type="text"/>
 									<input id="placeId" name="placeId" hidden="true" type="text"/>
 									<input id="geometry" name="geometry" hidden="true" type="text"/>
 									<input id="name" name="name" hidden="true" type="text"/>
 									<br>
-									<!-- Add favrest to database -->
+									<!-- 增加為最愛餐廳按鈕 -->
 									<button type="submit">點我，把餐廳加到最愛吧~</button>
 								</form>
 							<hr>
 
-								<!-- Google map DIV -->
+								<!-- Google Map DIV -->
 								<div class="row">
 									<div class="col google-map">
 										<h4>地圖：</h4>
@@ -76,12 +75,12 @@
 									</div>
 								</div>
 
-								<!-- initMap & initAutocomplete -->
+								<!-- 初始化 initMap & initAutocomplete -->
 								<script>
 									let map;
 									let place
 									function initMap() {
-										
+										// 初始化經緯度
 										let location = {
 											lat: 25.0374865,
 											lng: 121.5647688
@@ -99,6 +98,7 @@
 											document.getElementById('autocomplete'),
 											{
 												types:['establishment'],
+												// 位置限定在台灣
 												componentRestrictions:{'country':['TW']},
 												fields:['place_id','geometry','name','formatted_address']
 											});
@@ -121,13 +121,15 @@
 											});
 
 											let infowindow = new google.maps.InfoWindow({
-												// address from fields
+												// address 是從 fields 來
 											content: place.formatted_address,
 											});
+											// 得到place 的資訊
 											document.getElementById('placeId').value = place.place_id;
 											document.getElementById('geometry').value = place.geometry.location;
 											document.getElementById('name').value = place.name;
 										
+											// 新增餐廳按鈕點下跳出"提示小視窗"
 											// document.getElementById("favrest").addEventListener("click", function() {
 												
 											// });
@@ -136,6 +138,7 @@
 											marker.addListener('click', function() {
 												infowindow.open(map, marker );
 											});
+											// 開關infowindow視窗
 											google.maps.event.addListener(map,'click', function() {
 												infowindow.close();
 											});
@@ -165,7 +168,7 @@
 						</ul>
 					</footer>
 			</div>
-		<!-- JAVA Scripts src-->
+		<!-- javascripts src-->
 		<div>
 			<script src="/javascripts/jquery.min.js"></script>
 			<script src="/javascripts/jquery.scrollex.min.js"></script>

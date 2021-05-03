@@ -24,7 +24,7 @@ router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
 });
 
-// favrest form post, call favrestcontroller
+// 點擊新增按鈕後，呼叫favreset controller
 router.post('/favrest', favrestcontroller.addfavrest);
 
 router.get('/home', isLoggedIn, (req, res) => {
@@ -35,7 +35,7 @@ router.get('/error', isLoggedIn, (req, res) => {
   res.render('error');
 });
 
-// get FB auth
+// FB 第三方登入
 router.get('/auth/facebook',
   passport.authenticate('facebook', { scope: 'email' }));
 
@@ -45,17 +45,18 @@ router.get('/auth/facebook/callback',
     failureRedirect: '/error',
   }));
 
-// get GOOGLE auth
+// Google 第三方登入
 router.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/auth/google/callback',
   passport.authenticate('google', {
+    // 成功、失敗導向位置
     successRedirect: '/home',
     failureRedirect: '/error',
   }));
 
-// get logout
+// 帳號登出
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
