@@ -58,6 +58,9 @@
 								<!-- Search Box -->
 								<form action="/favrest" method="POST">
 									<input id="autocomplete" name="enterplacename" placeholder="這邊輸入地點！" type="text"/>
+									<input id="placeId" name="placeId" hidden="true" type="text"/>
+									<input id="geometry" name="geometry" hidden="true" type="text"/>
+									<input id="name" name="name" hidden="true" type="text"/>
 									<br>
 									<!-- Add favrest to database -->
 									<button type="submit">點我，把餐廳加到最愛吧~</button>
@@ -121,7 +124,10 @@
 												// address from fields
 											content: place.formatted_address,
 											});
-
+											document.getElementById('placeId').value = place.place_id;
+											document.getElementById('geometry').value = place.geometry.location;
+											document.getElementById('name').value = place.name;
+										
 											// document.getElementById("favrest").addEventListener("click", function() {
 												
 											// });
