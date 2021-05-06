@@ -26,6 +26,14 @@ router.get('/mealrecord', isLoggedIn, (req, res) => {
   res.render('mealrecord', { user: req.user });
 });
 
+router.get('/checkfavrest', isLoggedIn, (req, res) => {
+  res.render('checkfavrest', { user: req.user });
+});
+
+router.get('/checkmealrecord', isLoggedIn, (req, res) => {
+  res.render('checkmealrecord', { user: req.user });
+});
+
 router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
 });
