@@ -62,24 +62,25 @@
 									<input id="gettime"style="background-color:red" name="gettime" type="date"/>
 									<h4>評論：</h4>
 									<textarea id="comment" name="comment" type="text" style="width:300px;height:300px;"></textarea>
+									
 									<input id="geometry" name="geometry" hidden="true" type="text"/>
 									<input id="name" name="name" hidden="true" type="text"/>
 									<input id="placeId" name="placeId" hidden="true" type="text"/>
-									<!-- <input id="name" name="name" hidden="true" type="text"/> -->
+									
 									<br>
 									<!-- 增加為最愛餐廳按鈕 -->
 									<button type="submit">送出</button>
 								</form>
 							<hr>
 
-								<!-- Google Map DIV
-								<div class="row">
+								<!-- Google Map DIV -->
+								<div class="row" hidden='true'>
 									<div class="col google-map">
 										<h4>地圖：</h4>
 										<div id="map" class="embed-responsive embed-responsive-16by9"></div>
 										</style>
 									</div>
-								</div> -->
+								</div>
 
 								<!-- 初始化 initMap & initAutocomplete -->
 								<script>

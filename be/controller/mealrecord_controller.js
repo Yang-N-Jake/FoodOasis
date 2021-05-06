@@ -12,7 +12,10 @@ exports.mealrecord = (req, res, done) => {
   const { placeId, geometry, name } = req.body;
   // 取得用餐紀錄資訊
   const { gettime, comment } = req.body;
-
+  console.log('000000000000000000000000000000000000000000000');
+  console.log(placeId);
+  console.log(req.body);
+  console.log('000000000000000000000000000000000000000000000');
   // 儲存用餐紀錄之前先做判斷
   Restaurant.findOne({ place_id: placeId }, (err, restexist) => {
     if (err) return (err);
@@ -43,7 +46,7 @@ exports.mealrecord = (req, res, done) => {
       newrest.place_id = placeId;
       newrest.geometry = geometry;
       newrest.name = name;
-      newrest.favuser = favusername;
+
       // 初始化用餐紀錄
       newrest.mealrecord = [{ time: gettime, uid: favuserid, comment }];
       newrest.save((err2) => {
@@ -74,5 +77,5 @@ exports.mealrecord = (req, res, done) => {
     },
   );
   // 重新導向頁面
-  res.redirect('/addrestaurant');
+  res.redirect('/home');
 };
