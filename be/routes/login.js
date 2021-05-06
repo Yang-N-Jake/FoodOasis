@@ -6,6 +6,8 @@ const router = express.Router();
 
 const favrestcontroller = require('../controller/addrest_controller');
 
+const mealrecordcontroller = require('../controller/mealrecord_controller');
+
 router.get('/', (req, res) => {
   res.render('login');
 });
@@ -20,12 +22,19 @@ router.get('/addrestaurant', isLoggedIn, (req, res) => {
   res.render('addrestaurant', { user: req.user });
 });
 
+router.get('/mealrecord', isLoggedIn, (req, res) => {
+  res.render('mealrecord', { user: req.user });
+});
+
 router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
 });
 
 // 點擊新增按鈕後，呼叫favreset controller
 router.post('/favrest', favrestcontroller.addfavrest);
+
+// 點擊新增按鈕後，呼叫favreset controller
+router.post('/mealrecord', mealrecordcontroller.mealrecord);
 
 router.get('/home', isLoggedIn, (req, res) => {
   res.render('home', { user: req.user });

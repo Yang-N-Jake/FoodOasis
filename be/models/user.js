@@ -12,7 +12,7 @@ const UserSchema = mongoose.Schema({
   email: String,
   pic: String,
   favrest: [String],
-  mealrecord: [{ placeId: String, price: Number }],
+  mealrecord: [{ placeId: String, time: Date, comment: String }],
 });
 
 module.exports = mongoose.model('User', UserSchema);

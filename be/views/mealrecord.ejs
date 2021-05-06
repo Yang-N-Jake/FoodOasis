@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>用餐紀錄</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+   	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/stylesheets/main.css" />
+		<link rel="canonical" href="https://letswrite.tw/google-map-api-place-api/">
+		<noscript><link rel="stylesheet" href="/stylesheets/noscript.css" /></noscript>
+	</head>
+
+	<body class="is-preload">
+
+		<!-- Page Wrapper & Header-->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="/">美食綠洲</a></h1>
+						<nav id="nav">
+							<ul>
+								<li class="special">
+									<a href="#menu" class="menuToggle"><span>選單</span></a>
+									<div id="menu">
+										<ul>
+											<li><a href="index.html">Home</a></li>
+											<li><a href="generic.html">Generic</a></li>
+											<li><a href="elements.html">Elements</a></li>
+											<li><a href="#">Sign Up</a></li>
+											<li><a href="#">Log In</a></li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<article id="main">
+						<header>
+							<h2>用餐紀錄</h2>
+							<p>下滑填寫</p>
+							<a href="/home" class="button">返回主頁</a></li><p></p>
+						</header>
+
+						<section class="wrapper style5">
+
+							<div class="inner">	
+								<div id="app" class="container">
+								
+						
+								<!-- GOOGLE API KEY -->
+									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
+								
+								<!-- 搜尋框 -->
+								<form action="/mealrecord" method="POST">
+									<h4>地點：</h4>
+									<input id="autocomplete" name="enterplacename" placeholder="點我輸入地點！" type="text"/><br>
+									<h4>時間：</h4>
+									<input id="gettime"style="background-color:red" name="gettime" type="date"/>
+									<h4>評論：</h4>
+									<textarea id="comment" name="comment" type="text" style="width:300px;height:300px;"></textarea>
+									<input id="geometry" name="geometry" hidden="true" type="text"/>
+									<input id="name" name="name" hidden="true" type="text"/>
+									<input id="placeId" name="placeId" hidden="true" type="text"/>
+									<!-- <input id="name" name="name" hidden="true" type="text"/> -->
+									<br>
+									<!-- 增加為最愛餐廳按鈕 -->
+									<button type="submit">送出</button>
+								</form>
+							<hr>
+
+								<!-- Google Map DIV
+								<div class="row">
+									<div class="col google-map">
+										<h4>地圖：</h4>
+										<div id="map" class="embed-responsive embed-responsive-16by9"></div>
+										</style>
+									</div>
+								</div> -->
+
+								<!-- 初始化 initMap & initAutocomplete -->
+								<script>
+									let map;
+									let place
+									function initMap() {
+										// 初始化經緯度
+										let location = {
+											lat: 25.0374865,
+											lng: 121.5647688
+										};
+
+											map = new google.maps.Map(document.getElementById('map'), {
+											zoom: 16,
+											center: location
+										});
+
+									}
+									let autocomplete;
+									function initAutocomplete(){
+										autocomplete = new google.maps.places.Autocomplete(
+											document.getElementById('autocomplete'),
+											{
+												types:['establishment'],
+												// 位置限定在台灣
+												componentRestrictions:{'country':['TW']},
+												fields:['place_id','geometry','name','formatted_address']
+											});
+											autocomplete.addListener('place_changed', onPlaceChanged);
+									}
+									
+									function onPlaceChanged(){
+										place = autocomplete.getPlace();
+										if(!place.geometry){
+											document.getElementById('autocomplete').placeholder =
+											'請填寫地點哦！';
+										}else{
+											
+											let searchCenter = place.geometry.location;
+											map.panTo(searchCenter);
+
+											let marker = new google.maps.Marker({
+											position: searchCenter,
+											map: map,
+											});
+
+											let infowindow = new google.maps.InfoWindow({
+												// address 是從 fields 來
+											content: place.formatted_address,
+											});
+											// 得到place 的資訊
+											document.getElementById('placeId').value = place.place_id;
+											document.getElementById('geometry').value = place.geometry.location;
+											document.getElementById('name').value = place.name;
+										
+											// 新增餐廳按鈕點下跳出"提示小視窗"
+											// document.getElementById("favrest").addEventListener("click", function() {
+												
+											// });
+
+											infowindow.open(map, marker);
+											marker.addListener('click', function() {
+												infowindow.open(map, marker );
+											});
+											// 開關infowindow視窗
+											google.maps.event.addListener(map,'click', function() {
+												infowindow.close();
+											});
+
+										}		
+									}									
+									google.maps.event.addDomListener(window,'load',initAutocomplete);
+									google.maps.event.addDomListener(window,'load',initMap);
+								</script>
+							</div>
+
+						</section>
+					</article>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<ul class="icons">
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+							<li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+
+						<ul class="copyright">
+							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</footer>
+			</div>
+		<!-- javascripts src-->
+		<div>
+			<script src="/javascripts/jquery.min.js"></script>
+			<script src="/javascripts/jquery.scrollex.min.js"></script>
+			<script src="/javascripts/jquery.scrolly.min.js"></script>
+			<script src="/javascripts/browser.min.js"></script>
+			<script src="/javascripts/breakpoints.min.js"></script>
+			<script src="/javascripts/util.js"></script>
+			<script src="/javascripts/main.js"></script>
+		</div>	
+	</body>
+</html>
