@@ -55,7 +55,23 @@
 									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
 								
 								<!-- 搜尋框 -->
-								<form action="/mealrecord" method="POST">
+								<h4>最愛餐廳列表：</h4>
+									<% if(user.favrest.length){
+
+										%><ul>
+
+											<% user.favrest.forEach((favrest) => {
+												%>
+													<li><%= favrest %></li>
+												<%
+											}) %>
+
+										</ul><%
+
+									} %>
+
+								
+								<!-- <form action="/mealrecord" method="POST">
 									<h4>地點：</h4>
 									<input id="autocomplete" name="enterplacename" placeholder="點我輸入地點！" type="text"/><br>
 									<h4>時間：</h4>
@@ -68,9 +84,9 @@
 									<input id="placeId" name="placeId" hidden="true" type="text"/>
 									
 									<br>
-									<!-- 增加為最愛餐廳按鈕 -->
+									增加為最愛餐廳按鈕
 									<button type="submit">送出</button>
-								</form>
+								</form> -->
 							<hr>
 
 								<!-- Google Map DIV -->
