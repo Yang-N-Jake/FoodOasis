@@ -55,7 +55,86 @@
 									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
 								
 								<!-- 搜尋框 -->
-								<h4>最愛餐廳列表：</h4>
+								<style>
+									table,
+										td {
+												border: 3px solid rgb(0, 0, 0);
+												color:rgb(0, 0, 0);
+												margin: 0;
+										}
+										
+										thead,
+										th {
+												background-color: rgb(146, 146, 146);
+												color:red;
+												margin: 0 auto;
+												font-size: 150%;
+										}
+								</style>
+
+								<h4>查看及刪除最愛餐廳</h4>
+									<table>
+										<thead> 
+												<tr>	
+														<th colspan="2" >最愛餐廳列表</th>
+												</tr>
+										</thead>
+										<tbody>
+												
+														<% if(user.favrest.length){
+															%>
+																<% user.favrest.forEach((favrest) => {
+																	%><tr>
+																
+																	<td>
+																	<%= favrest %>
+																	</td>
+
+																	<td>
+																		<form action="/delete-item" method="POST">
+																		<button data-id="<%- favrest %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
+																		<input id="dataid" name="dataid" hidden="true" type="text"/>
+																	</form>
+																	</td>
+																	<%
+																}) %>
+																</tr>
+															<% 
+														} %>
+										</tbody>
+									</table>
+
+									<script>
+										document.addEventListener('click', function (e) {
+											if (e.target.classList.contains("delete-me")) {
+												let restdataid = e.target.getAttribute("data-id");
+												console.log('going to delete:' + restdataid);
+												document.getElementById('dataid').value = restdataid;
+											}
+											console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+										});
+									
+										// document.addEventListener('click', function (e) {
+										// 	if (e.target.classList.contains("delete-me")) {
+										// 		let originalText = e.target.parentElement.parentElement.querySelector(".item-text");
+										// 		//Key data-id
+										// 		let _id = e.target.getAttribute("data-id");
+										// 		console.log('going to delete:' + _id)
+
+										// 		if (confirm("確定要刪除這筆資料嗎 ? ")) {
+										// 			//delete data
+										// 			post('/delete-item', {
+										// 			id: _id
+										// 			}).then(function () {
+										// 			e.target.parentElement.parentElement.remove()
+										// 			}).catch(err => {
+										// 			console.log(err)
+										// 			});
+										// 		};
+										// 	};
+										// });
+									</script>
+
 									<% if(user.favrest.length){
 
 										%><ul>

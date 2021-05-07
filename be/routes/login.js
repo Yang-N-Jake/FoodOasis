@@ -8,6 +8,8 @@ const favrestcontroller = require('../controller/addrest_controller');
 
 const mealrecordcontroller = require('../controller/mealrecord_controller');
 
+const deletefavrestcontroller = require('../controller/deletefavrest_controller');
+
 router.get('/', (req, res) => {
   res.render('login');
 });
@@ -33,6 +35,9 @@ router.get('/checkfavrest', isLoggedIn, (req, res) => {
 router.get('/checkmealrecord', isLoggedIn, (req, res) => {
   res.render('checkmealrecord', { user: req.user });
 });
+
+// 點擊刪除最愛餐廳按鈕
+router.post('/delete-item', deletefavrestcontroller.deletefavrest);
 
 router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
