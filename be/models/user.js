@@ -1,4 +1,4 @@
-// store user data to Database
+// 使用者資料
 const mongoose = require('mongoose');
 
 const keys = require('../keys');
@@ -12,6 +12,7 @@ const UserSchema = mongoose.Schema({
   email: String,
   pic: String,
   favrest: [String],
+  mealrecord: [{ placeId: String, time: Date, comment: String }],
 });
 
 module.exports = mongoose.model('User', UserSchema);

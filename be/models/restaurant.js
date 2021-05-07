@@ -1,4 +1,4 @@
-// store restaurant data to Database
+// 餐廳資料
 const mongoose = require('mongoose');
 
 const keys = require('../keys');
@@ -12,6 +12,7 @@ const restaurant = mongoose.Schema({
   geometry: String,
   formatted_address: String,
   favuser: [String],
+  mealrecord: [{ uid: String, time: Date, comment: String }],
 });
 
 module.exports = mongoose.model('restaurant', restaurant);

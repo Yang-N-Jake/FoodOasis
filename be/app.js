@@ -1,4 +1,4 @@
-// Basic settings
+// 基本設定
 const express = require('express');
 
 const app = express();
@@ -7,27 +7,26 @@ const path = require('path');
 
 const logger = require('morgan');
 
-// FB login package
+// FB 登入設置
 const session = require('express-session');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-// Google login package
+// Google 登入設置
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-// get keys
+// 金鑰
 const keys = require('./keys');
 
 // routes and user
 const loginRouter = require('./routes/login');
-// const addrestRouter = require('./routes/addrest');
 const User = require('./models/user');
 
-// homepage.ejs
+// 首頁設定為.ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-//  homepage.html
+//  首頁設定為.html
 
 // const cons = require('consolidate');
 // view engine 設定成html
@@ -35,7 +34,7 @@ app.set('view engine', 'ejs');
 // app.set('view engine', 'html');
 // app.set('views', path.join(__dirname, 'views'));
 
-//  homepage.pug
+//  首頁設定為.pug
 
 //  view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -53,7 +52,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-// FB passport init
+// FB passport
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user.id));
@@ -63,7 +62,7 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// use FB Strategy
+// FB Strategy
 passport.use(new FacebookStrategy({
   clientID: keys.FB_AUTH_ID,
   clientSecret: keys.FB_AUTH_TOKEN,
@@ -80,26 +79,26 @@ passport.use(new FacebookStrategy({
         return done(null, user);
       }
       const newUser = new User();
-      // set fb information
+      // 設定user資訊
       newUser.uid = profile.id;
       newUser.token = accessToken;
-      // display your fb displayname
+      // FB 用戶顯示的名稱
       newUser.name = profile.displayName;
       newUser.email = profile.emails[0].value;
       newUser.pic = profile.photos[0].value;
-      // save user to the database
+      // 儲存用戶資訊至資料庫
       newUser.save((err2) => {
         if (err2) {
           throw err2;
         }
-        // success, return the new user
+        // 完成後回傳
         return done(null, newUser);
       });
     });
   });
 }));
 
-// use GOOGLE Strategy
+// GOOGLE Strategy
 passport.use(new GoogleStrategy({
   clientID: keys.GOOGLE_AUTH_ID,
   clientSecret: keys.GOOGLE_AUTH_TOKEN,
@@ -116,23 +115,21 @@ passport.use(new GoogleStrategy({
         return done(null, user);
       }
       const newUser = new User();
-      // set fb information
       newUser.uid = profile.id;
       newUser.token = accessToken;
       newUser.name = `${profile.name.givenName} ${profile.name.familyName}`;
       newUser.email = profile.emails[0].value;
       newUser.pic = profile.photos[0].value;
-      // save user to the database
+      // 儲存用戶資訊
       newUser.save((err2) => {
         if (err2) {
           throw err2;
         }
-        // success, return the new user
+        // 完成後回傳
         return done(null, newUser);
       });
     });
   });
 }));
 app.use('/', loginRouter);
-// app.use('/addrest', addrestRouter);
 module.exports = app;
