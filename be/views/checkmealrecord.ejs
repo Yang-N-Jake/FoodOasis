@@ -54,44 +54,85 @@
 								<!-- GOOGLE API KEY -->
 									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
 								
-								<!-- 搜尋框 -->
-								<h4>用餐紀錄列表：</h4>
-									<% if(user.mealrecord.length){
+								<!-- 查看用餐紀錄 -->
+								<style>
+									table,
+										td {
+												border: 3px solid rgb(0, 0, 0);
+												color:rgb(0, 0, 0);
+												margin: 0;
+										}
+										
+										thead,
+										th {
+												background-color: rgb(146, 146, 146);
+												color:red;
+												margin: 0 auto;
+												font-size: 150%;
+										}
+								</style>
 
-										%><ul>
+								<h3>查看及刪除用餐紀錄：</h3>
+									<table>
+										<thead> 
+												<tr>	
+														<th colspan="2" >用餐紀錄列表</th>
+												</tr>
+										</thead>
+										<tbody>
+														
 
-											<% user.mealrecord.forEach((mealrecord) => {
-												%>
-															用餐地點：<%= mealrecord.placeId %>
-															<br>
-															用餐時間：<%= new Date(mealrecord.time).getFullYear();%> /
-															<%= new Date(mealrecord.time).getMonth()+1;%> /
-															<%= new Date(mealrecord.time).getDate();%>
-															<br>
-															你的評論：<%= mealrecord.comment %>
-															<p></p>
-												<%
-											}) %>
+														<% if(user.mealrecord.length){
+															%>
+																<% user.mealrecord.forEach((mealrecord) => {
+																	%><tr>
+																	
+																	<td>
+																		用餐地點：<%= mealrecord.placeId %>
+																		<br>
+																		用餐時間：<%= new Date(mealrecord.time).getFullYear();%> /
+																		<%= new Date(mealrecord.time).getMonth()+1;%> /
+																		<%= new Date(mealrecord.time).getDate();%>
+																		<br>
+																		你的評論：<%= mealrecord.comment %>
+																		<p></p>
+																	</td>
 
-										</ul><%
+																	<td>
+																		<form action="/deletemealrecord" method="POST">
+																		<button data-id="<%- mealrecord %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
+																		<input id="deletemealrecord" name="deletemealrecord" hidden="true" type="text"/>
+																		</form>
+																	</td>
+																	
+																	
+																	<%
+																}) %>
+																</tr>
+															<% 
+														}%>
 
-									} %>
-								<!-- <form action="/mealrecord" method="POST">
-									<h4>地點：</h4>
-									<input id="autocomplete" name="enterplacename" placeholder="點我輸入地點！" type="text"/><br>
-									<h4>時間：</h4>
-									<input id="gettime"style="background-color:red" name="gettime" type="date"/>
-									<h4>評論：</h4>
-									<textarea id="comment" name="comment" type="text" style="width:300px;height:300px;"></textarea>
+														<%if(user.favrest.length == 0){%>	
+															<td>
+															沒有任何用餐紀錄! 快點去新增!
+															</td>
+														<%}%>
+										</tbody>
+									</table>
+
+									<script>
+										document.addEventListener('click', function (e) {
+											if (e.target.classList.contains("delete-me")) {
+												let restdataid = e.target.getAttribute("data-id");
+												console.log('going to delete:' + restdataid);
+												document.getElementById('deletemealrecord').value = restdataid;
+											}
+											console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+										});
+									</script>
 									
-									<input id="geometry" name="geometry" hidden="true" type="text"/>
-									<input id="name" name="name" hidden="true" type="text"/>
-									<input id="placeId" name="placeId" hidden="true" type="text"/>
-									
-									<br>
-									增加為最愛餐廳按鈕
-									 <button type="submit">送出</button> -->
-								</form> 
+								
+								 
 							<hr>
 
 								<!-- Google Map DIV -->

@@ -3,28 +3,31 @@ const Restaurant = require('../models/restaurant');
 const User = require('../models/user');
 
 // 新增最愛餐廳按鈕點下，login routes 會呼叫此function
-exports.deletefavrest = (req, res) => {
-  const { dataid } = req.body;
-  const favusername = req.user.name;
+exports.deletemealrecord = (req, res) => {
+  const { deletemealrecord } = req.body;
+  const favuseruid = req.user.uid;
 
-  console.log('dataid ');
-  console.log(dataid);
+  console.log('deletemealrecord');
+  console.log(deletemealrecord);
+  console.log('comment');
+  console.log(deletemealrecord.comment);
+  console.log(deletemealrecord[comment]);	
 
-  User.updateOne({ name: favusername }, { $pullAll: { favrest: [dataid] } },
+  User.updateOne({ uid: favuseruid }, { $pullAll: { mealrecord: [deletemealrecord] } },
     { overwrite: true }, (err) => {
       if (!err) {
-        console.log('使用者刪除最愛餐廳');
+        console.log('使用者成功刪除用餐紀錄');
       } else {
-        console.log('使用者把餐廳最愛刪除失敗了拉');
+        console.log('用餐紀錄刪除失敗');
       }
     });
 
-  Restaurant.updateOne({ name: dataid }, { $pullAll: { favuser: [favusername] } },
+  Restaurant.updateOne({ name: deletemealrecord }, { $pullAll: { mealrecord: [favuseruid] } },
     { overwrite: true }, (err) => {
       if (!err) {
-        console.log('餐廳刪除愛我的人');
+        console.log('餐廳刪除使用者用餐紀錄成功');
       } else {
-        console.log('餐廳把喜歡我的使用者刪除失敗了拉');
+        console.log('餐廳沒有把使用者用餐紀錄刪除');
       }
     });
 
@@ -44,5 +47,5 @@ exports.deletefavrest = (req, res) => {
   // console.log(res.user);
   // console.log('sssssssssssssssssssssssssssss');
   // return done(null, User);
-  res.redirect('/checkfavrest');
+  // res.redirect('/checkmealrecord');
 };

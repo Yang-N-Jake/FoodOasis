@@ -54,7 +54,7 @@
 								<!-- GOOGLE API KEY -->
 									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
 								
-								<!-- 搜尋框 -->
+								<!-- 查看最愛餐廳 -->
 								<style>
 									table,
 										td {
@@ -72,7 +72,7 @@
 										}
 								</style>
 
-								<h4>查看及刪除最愛餐廳</h4>
+								<h3>查看及刪除最愛餐廳：</h3>
 									<table>
 										<thead> 
 												<tr>	
@@ -80,12 +80,13 @@
 												</tr>
 										</thead>
 										<tbody>
-												
+														
+
 														<% if(user.favrest.length){
 															%>
 																<% user.favrest.forEach((favrest) => {
 																	%><tr>
-																
+																	
 																	<td>
 																	<%= favrest %>
 																	</td>
@@ -94,13 +95,21 @@
 																		<form action="/delete-item" method="POST">
 																		<button data-id="<%- favrest %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
 																		<input id="dataid" name="dataid" hidden="true" type="text"/>
-																	</form>
+																		</form>
 																	</td>
+																	
+																	
 																	<%
 																}) %>
 																</tr>
 															<% 
-														} %>
+														}%>
+
+														<%if(user.favrest.length == 0){%>	
+															<td>
+															沒有任何喜愛餐廳! 快點去新增!
+															</td>
+														<%}%>
 										</tbody>
 									</table>
 
@@ -113,59 +122,7 @@
 											}
 											console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 										});
-									
-										// document.addEventListener('click', function (e) {
-										// 	if (e.target.classList.contains("delete-me")) {
-										// 		let originalText = e.target.parentElement.parentElement.querySelector(".item-text");
-										// 		//Key data-id
-										// 		let _id = e.target.getAttribute("data-id");
-										// 		console.log('going to delete:' + _id)
-
-										// 		if (confirm("確定要刪除這筆資料嗎 ? ")) {
-										// 			//delete data
-										// 			post('/delete-item', {
-										// 			id: _id
-										// 			}).then(function () {
-										// 			e.target.parentElement.parentElement.remove()
-										// 			}).catch(err => {
-										// 			console.log(err)
-										// 			});
-										// 		};
-										// 	};
-										// });
 									</script>
-
-									<% if(user.favrest.length){
-
-										%><ul>
-
-											<% user.favrest.forEach((favrest) => {
-												%>
-													<li><%= favrest %></li>
-												<%
-											}) %>
-
-										</ul><%
-
-									} %>
-
-								
-								<!-- <form action="/mealrecord" method="POST">
-									<h4>地點：</h4>
-									<input id="autocomplete" name="enterplacename" placeholder="點我輸入地點！" type="text"/><br>
-									<h4>時間：</h4>
-									<input id="gettime"style="background-color:red" name="gettime" type="date"/>
-									<h4>評論：</h4>
-									<textarea id="comment" name="comment" type="text" style="width:300px;height:300px;"></textarea>
-									
-									<input id="geometry" name="geometry" hidden="true" type="text"/>
-									<input id="name" name="name" hidden="true" type="text"/>
-									<input id="placeId" name="placeId" hidden="true" type="text"/>
-									
-									<br>
-									增加為最愛餐廳按鈕
-									<button type="submit">送出</button>
-								</form> -->
 							<hr>
 
 								<!-- Google Map DIV -->

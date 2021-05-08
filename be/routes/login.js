@@ -10,6 +10,8 @@ const mealrecordcontroller = require('../controller/mealrecord_controller');
 
 const deletefavrestcontroller = require('../controller/deletefavrest_controller');
 
+const deletemealrecordcontroller = require('../controller/deletemealrecord_controller');
+
 router.get('/', (req, res) => {
   res.render('login');
 });
@@ -38,6 +40,8 @@ router.get('/checkmealrecord', isLoggedIn, (req, res) => {
 
 // 點擊刪除最愛餐廳按鈕
 router.post('/delete-item', deletefavrestcontroller.deletefavrest);
+// 點擊刪除用餐紀錄按鈕
+router.post('/deletemealrecord', deletemealrecordcontroller.deletemealrecord);
 
 router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
