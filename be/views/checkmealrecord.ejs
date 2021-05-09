@@ -100,8 +100,11 @@
 
 																	<td>
 																		<form action="/deletemealrecord" method="POST">
-																		<button data-id="<%- mealrecord %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
+																		<!-- 點擊按鈕，只會抓到用餐紀錄的placeId，也就是地址。 -->
+																		<button data-id="<%- mealrecord.placeId %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
 																		<input id="deletemealrecord" name="deletemealrecord" hidden="true" type="text"/>
+																		<input id="mealcomment" name="mealcomment" hidden="true" type="text"/>
+																		<input id="mealtime" name="mealtime" hidden="true" type="text"/>
 																		</form>
 																	</td>
 																	
@@ -123,9 +126,15 @@
 									<script>
 										document.addEventListener('click', function (e) {
 											if (e.target.classList.contains("delete-me")) {
+												// getAtrribute得到的值是String
 												let restdataid = e.target.getAttribute("data-id");
-												console.log('going to delete:' + restdataid);
+												// 抓到點擊的餐廳資料
+												console.log('going to delete: 1' + restdataid);
+												console.log(typeof(restdataid));
+												
 												document.getElementById('deletemealrecord').value = restdataid;
+												// document.getElementById('mealcomment').value = '<%- mealrecord.commet %>';
+												// document.getElementById('mealtime').value = '<%- mealrecord.time %>';
 											}
 											console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 										});

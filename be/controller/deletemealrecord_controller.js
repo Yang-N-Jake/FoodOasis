@@ -4,16 +4,23 @@ const User = require('../models/user');
 
 // 新增最愛餐廳按鈕點下，login routes 會呼叫此function
 exports.deletemealrecord = (req, res) => {
-  const { deletemealrecord } = req.body;
+  const { deletemealrecord, mealcomment, mealtime } = req.body;
   const favuseruid = req.user.uid;
 
   console.log('deletemealrecord');
   console.log(deletemealrecord);
-  console.log('comment');
-  console.log(deletemealrecord.comment);
-  console.log(deletemealrecord[comment]);	
 
-  User.updateOne({ uid: favuseruid }, { $pullAll: { mealrecord: [deletemealrecord] } },
+  console.log('mealcomment');
+  console.log(mealcomment);
+
+  console.log('mealtime');
+  console.log(mealtime);
+
+  User.updateOne({ uid: favuseruid },
+    {
+      $pullAll:
+       { mealrecord: [{ placeId: deletemealrecord, time: mealtime, comment: mealcomment }] },
+    },
     { overwrite: true }, (err) => {
       if (!err) {
         console.log('使用者成功刪除用餐紀錄');
@@ -22,7 +29,8 @@ exports.deletemealrecord = (req, res) => {
       }
     });
 
-  Restaurant.updateOne({ name: deletemealrecord }, { $pullAll: { mealrecord: [favuseruid] } },
+  Restaurant.updateOne({ name: deletemealrecord },
+    { $pullAll: { mealrecord: [{ uid: favuseruid }] } },
     { overwrite: true }, (err) => {
       if (!err) {
         console.log('餐廳刪除使用者用餐紀錄成功');
@@ -47,5 +55,5 @@ exports.deletemealrecord = (req, res) => {
   // console.log(res.user);
   // console.log('sssssssssssssssssssssssssssss');
   // return done(null, User);
-  // res.redirect('/checkmealrecord');
+  res.redirect('/checkmealrecord');
 };
