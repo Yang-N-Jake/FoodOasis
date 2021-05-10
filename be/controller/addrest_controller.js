@@ -2,13 +2,13 @@ const Restaurant = require('../models/restaurant');
 
 const User = require('../models/user');
 
-// 新增最愛餐廳按鈕點下，login routes 會呼叫此function
+// 新增最愛餐廳按鈕點下，Login routes 會呼叫此function
 exports.addfavrest = (req, res, done) => {
   // 取得地點資訊
   const placename = req.body.enterplacename;
-  const favusername = req.user.name;
-
   const { placeId, geometry, name } = req.body;
+  // 取得user資訊
+  const favusername = req.user.name;
 
   // 儲存餐廳地點之前先做判斷
   Restaurant.findOne({ place_id: placeId }, (err, restexist) => {
@@ -51,6 +51,7 @@ exports.addfavrest = (req, res, done) => {
     }
     return done(null, restexist);
   });
+
   // 新增用戶喜愛餐廳
   User.findOneAndUpdate(
     {

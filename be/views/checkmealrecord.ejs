@@ -115,9 +115,9 @@
 															<% 
 														}%>
 
-														<%if(user.favrest.length == 0){%>	
+														<%if(user.mealrecord.length == 0){%>	
 															<td>
-															沒有任何用餐紀錄! 快點去新增!
+															沒有任何用餐紀錄! 快點去填寫!
 															</td>
 														<%}%>
 										</tbody>
@@ -133,8 +133,6 @@
 												console.log(typeof(restdataid));
 												
 												document.getElementById('deletemealrecord').value = restdataid;
-												// document.getElementById('mealcomment').value = '<%- mealrecord.commet %>';
-												// document.getElementById('mealtime').value = '<%- mealrecord.time %>';
 											}
 											console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 										});

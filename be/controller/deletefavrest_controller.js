@@ -2,9 +2,11 @@ const Restaurant = require('../models/restaurant');
 
 const User = require('../models/user');
 
-// 新增最愛餐廳按鈕點下，login routes 會呼叫此function
+// 刪除最愛餐廳按鈕點下，login routes 會呼叫此function
 exports.deletefavrest = (req, res) => {
+  // 餐廳名稱
   const { dataid } = req.body;
+  // 使用者姓名
   const favusername = req.user.name;
 
   console.log('dataid ');

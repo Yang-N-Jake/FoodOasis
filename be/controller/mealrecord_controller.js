@@ -2,7 +2,7 @@ const Restaurant = require('../models/restaurant');
 
 const User = require('../models/user');
 
-// 新增最愛餐廳按鈕點下，login routes 會呼叫此function
+// 創建用餐紀錄按鈕點下，login routes 會呼叫此function
 exports.mealrecord = (req, res, done) => {
   // 取得使用者資訊
   const favusername = req.user.name;

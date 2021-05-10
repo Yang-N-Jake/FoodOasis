@@ -2,24 +2,20 @@ const Restaurant = require('../models/restaurant');
 
 const User = require('../models/user');
 
-// 新增最愛餐廳按鈕點下，login routes 會呼叫此function
+// 刪除用餐紀錄按鈕點下，login routes 會呼叫此function
 exports.deletemealrecord = (req, res) => {
-  const { deletemealrecord, mealcomment, mealtime } = req.body;
+  // 取得餐廳地址
+  const { deletemealrecord } = req.body;
   const favuseruid = req.user.uid;
 
   console.log('deletemealrecord');
   console.log(deletemealrecord);
 
-  console.log('mealcomment');
-  console.log(mealcomment);
-
-  console.log('mealtime');
-  console.log(mealtime);
-
   User.updateOne({ uid: favuseruid },
     {
-      $pullAll:
-       { mealrecord: [{ placeId: deletemealrecord, time: mealtime, comment: mealcomment }] },
+      // 使用$pull 才可以update Object，$pullAll是update Array
+      $pull:
+       { mealrecord: { placeId: deletemealrecord } },
     },
     { overwrite: true }, (err) => {
       if (!err) {
@@ -29,8 +25,8 @@ exports.deletemealrecord = (req, res) => {
       }
     });
 
-  Restaurant.updateOne({ name: deletemealrecord },
-    { $pullAll: { mealrecord: [{ uid: favuseruid }] } },
+  Restaurant.updateOne({ formatted_address: deletemealrecord },
+    { $pull: { mealrecord: { uid: favuseruid } } },
     { overwrite: true }, (err) => {
       if (!err) {
         console.log('餐廳刪除使用者用餐紀錄成功');
