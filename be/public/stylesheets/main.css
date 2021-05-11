@@ -3525,7 +3525,7 @@ input, select, textarea {
 								display: inline-block;
 								height: 3.75em;
 								vertical-align: top;
-								width: 2em;
+								width: 3em;
 							}
 
 							@media screen and (max-width: 736px) {
