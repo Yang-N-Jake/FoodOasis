@@ -72,7 +72,6 @@
 									<button type="submit">送出</button>
 								</form>
 							<hr>
-
 								<!-- Google Map DIV -->
 								<div class="row" hidden='true'>
 									<div class="col google-map">
@@ -136,11 +135,6 @@
 											document.getElementById('geometry').value = place.geometry.location;
 											document.getElementById('name').value = place.name;
 										
-											// 新增餐廳按鈕點下跳出"提示小視窗"
-											// document.getElementById("favrest").addEventListener("click", function() {
-												
-											// });
-
 											infowindow.open(map, marker);
 											marker.addListener('click', function() {
 												infowindow.open(map, marker );

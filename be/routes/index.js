@@ -38,19 +38,20 @@ router.get('/checkmealrecord', isLoggedIn, (req, res) => {
   res.render('checkmealrecord', { user: req.user });
 });
 
-// 點擊刪除最愛餐廳按鈕
+// 點擊刪除最愛餐廳按鈕，呼叫deletefavrestcontroller
 router.post('/delete-item', deletefavrestcontroller.deletefavrest);
-// 點擊刪除用餐紀錄按鈕
+
+// 點擊刪除用餐紀錄按鈕，呼叫deletemealrecordcontroller
 router.post('/deletemealrecord', deletemealrecordcontroller.deletemealrecord);
 
 router.get('/favrest', (req, res) => {
   res.render('addrestaurant');
 });
 
-// 點擊新增按鈕後，呼叫favreset controller
+// 點擊新增最愛餐廳按鈕，呼叫favresetcontroller
 router.post('/favrest', favrestcontroller.addfavrest);
 
-// 點擊新增按鈕後，呼叫favreset controller
+// 點擊新增用餐紀錄按鈕，呼叫mealrecordcontroller
 router.post('/mealrecord', mealrecordcontroller.mealrecord);
 
 router.get('/home', isLoggedIn, (req, res) => {
@@ -77,7 +78,7 @@ router.get('/auth/google',
 
 router.get('/auth/google/callback',
   passport.authenticate('google', {
-    // 成功、失敗導向位置
+    // 成功、失敗導向頁面
     successRedirect: '/home',
     failureRedirect: '/error',
   }));

@@ -8,16 +8,14 @@ exports.deletemealrecord = (req, res) => {
   const { deletemealrecord } = req.body;
   const favuseruid = req.user.uid;
 
-  console.log('deletemealrecord');
-  console.log(deletemealrecord);
-
   User.updateOne({ uid: favuseruid },
     {
-      // 使用$pull 才可以update Object，$pullAll是update Array
+      // 使用$pull update Object，$pullAll 則是 update Array
       $pull:
        { mealrecord: { placeId: deletemealrecord } },
     },
     { overwrite: true }, (err) => {
+      // 此處為偵錯處理
       if (!err) {
         console.log('使用者成功刪除用餐紀錄');
       } else {
@@ -28,6 +26,7 @@ exports.deletemealrecord = (req, res) => {
   Restaurant.updateOne({ formatted_address: deletemealrecord },
     { $pull: { mealrecord: { uid: favuseruid } } },
     { overwrite: true }, (err) => {
+      // 此處為偵錯處理
       if (!err) {
         console.log('餐廳刪除使用者用餐紀錄成功');
       } else {
@@ -35,21 +34,5 @@ exports.deletemealrecord = (req, res) => {
       }
     });
 
-  // User.findOne({ name: favusername }, (err, user) => {
-  //   if (user) {
-  //     res.user = user;
-  //     console.log('複寫res.user');
-  //     console.log(user);
-  //     console.log(res.user);
-  //   } else {
-  //     console.log('重新試一次');
-  //   }
-  //   console.log('近來 findone');
-  // });
-
-  // console.log('find one 之後');
-  // console.log(res.user);
-  // console.log('sssssssssssssssssssssssssssss');
-  // return done(null, User);
   res.redirect('/checkmealrecord');
 };

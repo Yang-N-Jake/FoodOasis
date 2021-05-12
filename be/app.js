@@ -19,26 +19,12 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./keys');
 
 // routes and user
-const loginRouter = require('./routes/login');
+const loginRouter = require('./routes/index');
 const User = require('./models/user');
 
 // 首頁設定為.ejs
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
-//  首頁設定為.html
-
-// const cons = require('consolidate');
-// view engine 設定成html
-// app.engine('html', cons.swig);
-// app.set('view engine', 'html');
-// app.set('views', path.join(__dirname, 'views'));
-
-//  首頁設定為.pug
-
-//  view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());

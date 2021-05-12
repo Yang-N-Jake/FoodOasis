@@ -17,200 +17,191 @@
 			<div id="page-wrapper">
 
 				<!-- Header -->
-					<header id="header">
-						<h1><a href="/">美食綠洲</a></h1>
-						<nav id="nav">
-							<ul>
-								<li class="special">
-									<a href="#menu" class="menuToggle"><span>選單</span></a>
-									<div id="menu">
-										<ul>
-											<li><a href="index.html">Home</a></li>
-											<li><a href="generic.html">Generic</a></li>
-											<li><a href="elements.html">Elements</a></li>
-											<li><a href="#">Sign Up</a></li>
-											<li><a href="#">Log In</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</nav>
-					</header>
+				<header id="header">
+					<h1><a href="/">美食綠洲</a></h1>
+					<nav id="nav">
+						<ul>
+							<li class="special">
+								<a href="#menu" class="menuToggle"><span>選單</span></a>
+								<div id="menu">
+									<ul>
+										<li><a href="index.html">Home</a></li>
+										<li><a href="generic.html">Generic</a></li>
+										<li><a href="elements.html">Elements</a></li>
+										<li><a href="#">Sign Up</a></li>
+										<li><a href="#">Log In</a></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+					</nav>
+				</header>
 
 				<!-- Main -->
-					<article id="main">
-						<header>
-							<h2>查看最愛餐廳</h2>
-							<p>下滑查看</p>
-							<a href="/home" class="button">返回主頁</a></li><p></p>
-						</header>
+				<article id="main">
+					<header>
+						<h2>查看最愛餐廳</h2>
+						<p>下滑查看</p>
+						<a href="/home" class="button">返回主頁</a></li><p></p>
+					</header>
 
-						<section class="wrapper style5">
-
-							<div class="inner">	
-								<div id="app" class="container">
-								
-						
-								<!-- GOOGLE API KEY -->
-									<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
-								
-								<!-- 查看最愛餐廳 -->
-								<style>
-									table,
-										td {
-												border: 3px solid rgb(0, 0, 0);
-												color:rgb(0, 0, 0);
-												margin: 0;
-										}
-										
-										thead,
-										th {
-												background-color: rgb(146, 146, 146);
-												color:red;
-												margin: 0 auto;
-												font-size: 150%;
-										}
-								</style>
-
-								<h3>查看及刪除最愛餐廳：</h3>
-									<table>
-										<thead> 
-												<tr>	
-														<th colspan="2" >最愛餐廳列表</th>
-												</tr>
-										</thead>
-										<tbody>
-														
-
-														<% if(user.favrest.length){
-															%>
-																<% user.favrest.forEach((favrest) => {
-																	%><tr>
-																	
-																	<td>
-																	<%= favrest %>
-																	</td>
-
-																	<td>
-																		<form action="/delete-item" method="POST">
-																		<button data-id="<%- favrest %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
-																		<input id="dataid" name="dataid" hidden="true" type="text"/>
-																		</form>
-																	</td>
-																	
-																	
-																	<%
-																}) %>
-																</tr>
-															<% 
-														}%>
-
-														<%if(user.favrest.length == 0){%>	
-															<td>
-															沒有任何喜愛餐廳! 快點去新增!
-															</td>
-														<%}%>
-										</tbody>
-									</table>
-
-									<script>
-										document.addEventListener('click', function (e) {
-											if (e.target.classList.contains("delete-me")) {
-												let restdataid = e.target.getAttribute("data-id");
-												console.log('going to delete:' + restdataid);
-												document.getElementById('dataid').value = restdataid;
-											}
-											console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-										});
-									</script>
-							<hr>
-
-								<!-- Google Map DIV -->
-								<div class="row" hidden='true'>
-									<div class="col google-map">
-										<h4>地圖：</h4>
-										<div id="map" class="embed-responsive embed-responsive-16by9"></div>
-										</style>
-									</div>
-								</div>
-
-								<!-- 初始化 initMap & initAutocomplete -->
-								<script>
-									let map;
-									let place
-									function initMap() {
-										// 初始化經緯度
-										let location = {
-											lat: 25.0374865,
-											lng: 121.5647688
-										};
-
-											map = new google.maps.Map(document.getElementById('map'), {
-											zoom: 16,
-											center: location
-										});
-
-									}
-									let autocomplete;
-									function initAutocomplete(){
-										autocomplete = new google.maps.places.Autocomplete(
-											document.getElementById('autocomplete'),
-											{
-												types:['establishment'],
-												// 位置限定在台灣
-												componentRestrictions:{'country':['TW']},
-												fields:['place_id','geometry','name','formatted_address']
-											});
-											autocomplete.addListener('place_changed', onPlaceChanged);
+					<section class="wrapper style5">
+						<div class="inner">	
+							<div id="app" class="container">
+					
+							<!-- GOOGLE API KEY -->
+								<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpheVcZCgVYuLfvUQ1u9VgE9zRXXOZqyQ&libraries=places"></script>	
+							
+							<!-- 查看最愛餐廳 -->
+							<style>
+								table,
+									td {
+											border: 3px solid rgb(0, 0, 0);
+											color:rgb(0, 0, 0);
+											margin: 0;
 									}
 									
-									function onPlaceChanged(){
-										place = autocomplete.getPlace();
-										if(!place.geometry){
-											document.getElementById('autocomplete').placeholder =
-											'請填寫地點哦！';
-										}else{
-											
-											let searchCenter = place.geometry.location;
-											map.panTo(searchCenter);
+									thead,
+									th {
+											background-color: rgb(146, 146, 146);
+											color:red;
+											margin: 0 auto;
+											font-size: 150%;
+									}
+							</style>
 
-											let marker = new google.maps.Marker({
-											position: searchCenter,
-											map: map,
-											});
+							<h3>查看及刪除最愛餐廳：</h3>
+								<table>
+									<thead> 
+											<tr>	
+													<th colspan="2" >最愛餐廳列表</th>
+											</tr>
+									</thead>
+									<tbody>
+										<% if(user.favrest.length){
+											%>
+												<% user.favrest.forEach((favrest) => {
+													%><tr>
+													
+													<td>
+													<%= favrest %>
+													</td>
 
-											let infowindow = new google.maps.InfoWindow({
-												// address 是從 fields 來
-											content: place.formatted_address,
-											});
-											// 得到place 的資訊
-											document.getElementById('placeId').value = place.place_id;
-											document.getElementById('geometry').value = place.geometry.location;
-											document.getElementById('name').value = place.name;
-										
-											// 新增餐廳按鈕點下跳出"提示小視窗"
-											// document.getElementById("favrest").addEventListener("click", function() {
-												
-											// });
+													<td>
+														<form action="/delete-item" method="POST">
+														<button data-id="<%- favrest %>" class="delete-me btn btn-danger btn-sm" type="submit">Delete</button>
+														<input id="dataid" name="dataid" hidden="true" type="text"/>
+														</form>
+													</td>
+													
+													
+													<%
+												}) %>
+												</tr>
+											<% 
+										}%>
+										<!-- 當沒有資料時 -->
+										<%if(user.favrest.length == 0){%>	
+											<td>
+											沒有任何喜愛餐廳! 快點去新增!
+											</td>
+										<%}%>
+									</tbody>
+								</table>
 
-											infowindow.open(map, marker);
-											marker.addListener('click', function() {
-												infowindow.open(map, marker );
-											});
-											// 開關infowindow視窗
-											google.maps.event.addListener(map,'click', function() {
-												infowindow.close();
-											});
+							<script>
+								document.addEventListener('click', function (e) {
+									if (e.target.classList.contains("delete-me")) {
+										let restdataid = e.target.getAttribute("data-id");
+										console.log('going to delete:' + restdataid);
+										document.getElementById('dataid').value = restdataid;
+									}
+									console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+								});
+							</script>
+						<hr>
 
-										}		
-									}									
-									google.maps.event.addDomListener(window,'load',initAutocomplete);
-									google.maps.event.addDomListener(window,'load',initMap);
-								</script>
+							<!-- Google Map DIV -->
+							<div class="row" hidden='true'>
+								<div class="col google-map">
+									<h4>地圖：</h4>
+									<div id="map" class="embed-responsive embed-responsive-16by9"></div>
+									</style>
+								</div>
 							</div>
 
-						</section>
-					</article>
+							<!-- 初始化 initMap & initAutocomplete -->
+							<script>
+								let map;
+								let place
+								function initMap() {
+									// 初始化經緯度
+									let location = {
+										lat: 25.0374865,
+										lng: 121.5647688
+									};
+
+										map = new google.maps.Map(document.getElementById('map'), {
+										zoom: 16,
+										center: location
+									});
+
+								}
+								let autocomplete;
+								function initAutocomplete(){
+									autocomplete = new google.maps.places.Autocomplete(
+										document.getElementById('autocomplete'),
+										{
+											types:['establishment'],
+											// 位置限定在台灣
+											componentRestrictions:{'country':['TW']},
+											fields:['place_id','geometry','name','formatted_address']
+										});
+										autocomplete.addListener('place_changed', onPlaceChanged);
+								}
+								
+								function onPlaceChanged(){
+									place = autocomplete.getPlace();
+									if(!place.geometry){
+										document.getElementById('autocomplete').placeholder =
+										'請填寫地點哦！';
+									}else{
+										
+										let searchCenter = place.geometry.location;
+										map.panTo(searchCenter);
+
+										let marker = new google.maps.Marker({
+										position: searchCenter,
+										map: map,
+										});
+
+										let infowindow = new google.maps.InfoWindow({
+											// address 是從 fields 來的
+										content: place.formatted_address,
+										});
+										// 得到place 的資訊
+										document.getElementById('placeId').value = place.place_id;
+										document.getElementById('geometry').value = place.geometry.location;
+										document.getElementById('name').value = place.name;
+
+										infowindow.open(map, marker);
+										marker.addListener('click', function() {
+											infowindow.open(map, marker );
+										});
+										// 開關infowindow視窗
+										google.maps.event.addListener(map,'click', function() {
+											infowindow.close();
+										});
+
+									}		
+								}									
+								google.maps.event.addDomListener(window,'load',initAutocomplete);
+								google.maps.event.addDomListener(window,'load',initMap);
+							</script>
+						</div>
+
+					</section>
+				</article>
 
 				<!-- Footer -->
 					<footer id="footer">
