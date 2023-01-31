@@ -1,4 +1,4 @@
-// 餐廳資料
+// 餐廳
 const mongoose = require('mongoose');
 
 const keys = require('../keys');

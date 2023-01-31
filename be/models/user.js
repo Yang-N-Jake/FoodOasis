@@ -1,4 +1,4 @@
-// 使用者資料
+// 使用者
 const mongoose = require('mongoose');
 
 const keys = require('../keys');

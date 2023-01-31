@@ -38,10 +38,12 @@
 						<header>
 							<h2><%= user.name %>，歡迎！</h2>
 							<p>請下滑點選所需要的功能</p>
-								<a href="/addrestaurant" class="button">創建最愛餐廳</a></li>
-								<a href="/mealrecord" class="button">填寫用餐紀錄</a></li>
-								<a href="/checkfavrest" class="button">查看最愛餐廳</a></li>
-								<a href="/checkmealrecord" class="button">查看用餐紀錄</a></li><p>
+								<div>
+									<a href="/addrestaurant" class="button">創建最愛餐廳</a><br>
+									<a href="/mealrecord" class="button">填寫用餐紀錄</a> <br>
+									<a href="/checkfavrest" class="button">查看最愛餐廳</a><br>
+									<a href="/checkmealrecord" class="button">查看用餐紀錄</a><p>
+								</div>
 
              		<ul class="actions special">
 								<li><a href="/logout" class="button primary">點此登出</a></li>
@@ -55,9 +57,7 @@
 								<strong>email</strong>: <%= user.email %><br>
 								<strong>name</strong>: <%= user.name %><br>
                 <img src="<%=user.pic%>" width="200" height="200" alt=""></p>
-								
-								<hr />
-
+								<hr/>
 								<h4>Feugiat aliquam</h4>
 								<p>Nam sapien ante, varius in pulvinar vitae, rhoncus id massa. Donec varius ex in mauris ornare, eget euismod urna egestas. Etiam lacinia tempor ipsum, sodales porttitor justo. Aliquam dolor quam, semper in tortor eu, volutpat efficitur quam. Fusce nec fermentum nisl. Aenean erat diam, tempus aliquet erat.</p>
 
@@ -80,9 +80,7 @@
 							<li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 						</ul>
 					</footer>
-
 			</div>
-
 		<!-- Scripts -->
 			<script src="/javascripts/jquery.min.js"></script>
 			<script src="/javascripts/jquery.scrollex.min.js"></script>
@@ -91,7 +89,6 @@
 			<script src="/javascripts/breakpoints.min.js"></script>
 			<script src="/javascripts/util.js"></script>
 			<script src="/javascripts/main.js"></script>
-
 	</body>
 </html>
 
